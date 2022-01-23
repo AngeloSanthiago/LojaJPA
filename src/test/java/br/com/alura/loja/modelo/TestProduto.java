@@ -11,6 +11,30 @@ public class TestProduto {
 	EntityManager em = JPAUtil.getEntityManager();
 	
 	@Test
+	public void testeDeletaObjeto() {
+		Categoria computadores = new Categoria("COMPUTADOR");
+		em.getTransaction().begin();
+		
+		em.persist(computadores);
+		computadores.setNome("XPTO");
+		
+		em.flush();
+		em.clear();
+		
+		computadores = em.merge(computadores);
+		computadores.setNome("XPTO2");
+		em.flush();
+//		em.clear(); //Não lança exceção porém não realiza delete quando ativada esta linha
+//		em.close(); //Não lança exceção porém não realiza delete quando ativada esta linha
+		em.remove(computadores);
+		em.flush();
+		
+		System.out.println("Fim testeDeletaObjeto");
+	
+	}
+	
+	
+	@Test
 	public void testeRecuperaEstadoGerenciadoDoObjeto() {
 		Categoria computadores = new Categoria("COMPUTADOR");
 //		Produto computador = new Produto("Computador", "Samsung", new BigDecimal(1500), computadores);
@@ -27,7 +51,7 @@ public class TestProduto {
 		computadores.setNome("XPTO2");
 		em.flush();
 		
-		System.out.println("Fim teste 01");
+		System.out.println("testeRecuperaEstadoGerenciadoDoObjeto");
 	
 	}
 	

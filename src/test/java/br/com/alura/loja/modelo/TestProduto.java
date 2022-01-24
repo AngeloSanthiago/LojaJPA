@@ -92,6 +92,7 @@ public class TestProduto {
 		computadores.setNome("XPTO2");//Objeto não está mais gerenciado neste ponto
 		
 		em.close();
+		
 	
 	}
 

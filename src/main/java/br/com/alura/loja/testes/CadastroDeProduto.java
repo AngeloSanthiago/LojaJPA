@@ -12,6 +12,10 @@ import br.com.alura.loja.util.JPAUtil;
 
 public class CadastroDeProduto {
 	public static void main(String[] args) {
+		cadastrarProduto();
+	}
+
+	public static void cadastrarProduto() {
 		Categoria celurares = new Categoria("CELULARES");
 		Produto celular = new Produto("Xiaomi Redmi", "Muito legal",new BigDecimal("800"), celurares );
 		

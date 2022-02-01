@@ -1,10 +1,19 @@
 package br.com.alura.loja.modelo;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Stream;
+
 import javax.persistence.EntityManager;
 
 import org.junit.Test;
 
 import br.com.alura.loja.dao.CategoriaDao;
+import br.com.alura.loja.dao.ProdutoDao;
+import br.com.alura.loja.testes.CadastroDeProduto;
 import br.com.alura.loja.util.JPAUtil;
 
 public class TestProduto {
@@ -92,8 +101,30 @@ public class TestProduto {
 		computadores.setNome("XPTO2");//Objeto não está mais gerenciado neste ponto
 		
 		em.close();
-		
+	}
 	
+	@Test
+	public void test01_RecuperaUmProduto() {
+		CadastroDeProduto.cadastrarProduto();
+		
+		ProdutoDao produtoDao = new ProdutoDao(em);
+		Produto p = produtoDao.buscarPorId(1l);
+		
+		assertEquals(new BigDecimal("800.00"), p.getPreco());
+		
+	}
+	
+	@Test
+	public void test02_TodosOsProdutos() {
+		CadastroDeProduto.cadastrarProduto();
+		
+		ProdutoDao produtoDao = new ProdutoDao(em);
+		List<Produto> produtos = produtoDao.buscarTodos();
+		
+		Stream<Produto> produtosFiltrados = produtos.stream().filter(p -> p.getNome() == "Xiaomi Redmi");
+		produtos.forEach(p -> System.out.println(p.getNome()));
+		
+		assertTrue(produtosFiltrados.count() > 0L);
 	}
 
 }

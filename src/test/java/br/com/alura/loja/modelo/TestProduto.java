@@ -167,5 +167,17 @@ public class TestProduto {
 		
 		assertTrue(produtoFiltrado.count() > 0L);
 	}
+	
+	@Test
+	public void test06_BuscaPrecoDoProdutoComNome() {
+		CadastroDeProduto.cadastrarProduto();
+		
+		ProdutoDao produtoDao = new ProdutoDao(em);
+		BigDecimal preco = produtoDao.buscarPrecoDoProdutoComNome("Xiaomi Redmi");
+		
+		System.out.println("Preço do Produto: "+preco);
+		
+		assertTrue(preco.doubleValue() > 0);
+	}
 
 }
